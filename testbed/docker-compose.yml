@@ -1,0 +1,38 @@
+services:
+    valkey:
+        image: valkey/valkey:8-alpine
+        restart: unless-stopped
+        command: valkey-server --appendonly yes --requirepass iobroker
+        volumes:
+            - valkey-data:/data
+        ports:
+            - '6379:6379'
+        environment:
+            - VALKEY_PASSWORD=iobroker
+
+    iobroker:
+        image: iobroker/iobroker:latest
+        restart: unless-stopped
+        hostname: iobroker
+        ports:
+            - '8181:8081'
+            - '8182:8082'
+        volumes:
+            - iobroker-data:/opt/iobroker
+        environment:
+            - TZ=Europe/Zurich
+            - IOB_MULTIHOST=master
+            - IOB_OBJECTSDB_TYPE=redis
+            - IOB_OBJECTSDB_HOST=valkey
+            - IOB_OBJECTSDB_PORT=6379
+            - IOB_OBJECTSDB_PASS=iobroker
+            - IOB_STATESDB_TYPE=redis
+            - IOB_STATESDB_HOST=valkey
+            - IOB_STATESDB_PORT=6379
+            - IOB_STATESDB_PASS=iobroker
+        depends_on:
+            - valkey
+
+volumes:
+    valkey-data:
+    iobroker-data:
