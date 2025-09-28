@@ -33,7 +33,6 @@
         "cron-parser": "^4.9.0",
         "deep-clone": "^3.0.3",
         "fs-extra": "^11.3.2",
-        "iobroker.js-controller": "^7.0.7",
         "node-schedule": "^2.1.1",
         "patch-package": "^8.0.0",
         "pidusage": "^4.0.1",
