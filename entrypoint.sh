@@ -2,8 +2,12 @@
 set -e
 
 # ensure IOB_K8S_ADAPTER and IOB_K8S_INSTANCE are set
-if [ -z "$IOB_K8S_ADAPTER" ] || [ -z "$IOB_K8S_INSTANCE" ]; then
-    echo "Error: IOB_K8S_ADAPTER and IOB_K8S_INSTANCE environment variables must be set"
+if [ -z "$IOB_K8S_ADAPTER" ]; then
+    echo "Error: IOB_K8S_ADAPTER environment variable must be set"
+    exit 1
+fi
+if [ -z "$IOB_K8S_INSTANCE" ]; then
+    echo "Error: IOB_K8S_INSTANCE environment variable must be set"
     exit 1
 fi
 
