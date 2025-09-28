@@ -1,5 +1,5 @@
 // Mock yargs before importing the main module
-jest.mock('yargs/yargs', () => {
+/*jest.mock('yargs/yargs', () => {
     return jest.fn(() => ({
         option: jest.fn().mockReturnThis(),
         help: jest.fn().mockReturnThis(),
@@ -12,11 +12,11 @@ jest.mock('yargs/yargs', () => {
 
 jest.mock('yargs/helpers', () => ({
     hideBin: jest.fn((args) => args.slice(2)),
-}));
+}));*/
 
 import { main } from '../index';
 
-describe('k8s-controller', () => {
+describe('base-adapter', () => {
     beforeEach(() => {
         jest.spyOn(console, 'log').mockImplementation(() => {});
     });
