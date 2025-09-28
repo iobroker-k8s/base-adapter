@@ -33,7 +33,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production && \
+    npm install iobroker.js-controller --ignore-scripts && \
+    npm cache clean --force
 
 # Copy built application
 COPY --from=builder /app/build ./build
