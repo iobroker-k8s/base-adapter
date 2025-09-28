@@ -6,11 +6,11 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Copy "patch-package" files
+COPY patches/ ./patches/
 
-# Install build dependencies
-RUN npm install --save-dev typescript
+# Install dependencies
+RUN npm install
 
 # Copy source code
 COPY tsconfig.json tsconfig.build.json ./
@@ -32,9 +32,13 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
+# Copy "patch-package" files
+COPY patches/ ./patches/
+
 # Install only production dependencies
 RUN npm ci --only=production && \
     npm install iobroker.js-controller --ignore-scripts && \
+    npx patch-package --exclude nothing && \
     npm cache clean --force
 
 # Copy built application

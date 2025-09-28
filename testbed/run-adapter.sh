@@ -23,6 +23,7 @@ docker build \
     --build-arg "ADAPTER_NAME=${ADAPTER_NAME}"
 
 docker run -it --rm \
+  -e IOB_K8S_HOSTNAME=k8s-cluster \
   -e IOB_K8S_INSTANCE=0 \
   --network testbed_default \
   -v ./iobroker-data:/app/iobroker-data \

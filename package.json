@@ -27,6 +27,7 @@
         "node": ">=24.0.0"
     },
     "dependencies": {
+        "@iobroker/js-controller-cli": "^7.0.7",
         "patch-package": "^8.0.0",
         "yargs": "^18.0.0"
     },
