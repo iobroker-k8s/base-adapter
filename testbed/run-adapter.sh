@@ -8,6 +8,9 @@ if [ "$#" -lt 2 ]; then
   echo "  <adapter_name>  Name of the adapter to run"
   echo "  <command>      Command to run inside the adapter (start, add, ...)"
   echo "  [<args>]       Optional arguments for the command"
+  echo ""
+  echo "You can also set the ADAPTER_INSTANCE environment variable to "
+  echo "specify the instance number (default is 0)."
   exit 1
 fi
 
@@ -17,6 +20,10 @@ ADAPTER_NAME=$1
 shift
 COMMAND=$@
 
+if [ -z "$ADAPTER_INSTANCE" ]; then
+  ADAPTER_INSTANCE=0
+fi
+
 docker build \
     -t iobrokerk8s/adapter-${ADAPTER_NAME}:local-latest \
     . \
@@ -24,7 +31,7 @@ docker build \
 
 docker run -it --rm \
   -e IOB_K8S_HOSTNAME=k8s-cluster \
-  -e IOB_K8S_INSTANCE=0 \
+  -e IOB_K8S_INSTANCE=$ADAPTER_INSTANCE \
   --network testbed_default \
   -v ./iobroker-data:/app/iobroker-data \
   iobrokerk8s/adapter-${ADAPTER_NAME}:local-latest \
