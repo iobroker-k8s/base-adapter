@@ -21,7 +21,7 @@ if [ "$1" = "start" ]; then
     cd /app/node_modules
     shift
     set -x
-    node iobroker.$IOB_K8S_ADAPTER $IOB_K8S_INSTANCE "$@"
+    node iobroker.$IOB_K8S_ADAPTER --instance $IOB_K8S_INSTANCE "$@"
 else
     cd /app
     node . "$@"
