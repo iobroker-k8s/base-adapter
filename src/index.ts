@@ -29,7 +29,20 @@ async function run(): Promise<void> {
         .command(
             ['add', 'a'],
             'Add a new adapter',
-            () => {},
+            (builder) =>
+                builder
+                    .option('enabled', {
+                        type: 'boolean',
+                        description: 'Install the adapter as enabled',
+                    })
+                    .option('ignore-if-exists', {
+                        type: 'boolean',
+                        description: 'Ignore if the instance already exists',
+                    })
+                    .option('port', {
+                        type: 'number',
+                        description: 'Port for the new instance',
+                    }),
             async (argv) => {
                 console.log(`Adding new adapter: ${argv.adapter}.${argv.instance}`);
                 const { states, objects } = await dbConnectAsync(false, {});
@@ -42,6 +55,9 @@ async function run(): Promise<void> {
                 await installer.installAdapter(argv.adapter);
                 await installer.createInstance(argv.adapter, {
                     instance: argv.instance,
+                    enabled: argv.enabled,
+                    ignoreIfExists: argv.ignoreIfExists,
+                    port: argv.port,
                 });
                 await states.destroy();
                 await objects.destroy();
